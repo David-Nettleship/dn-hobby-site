@@ -392,8 +392,297 @@ footer {
 
 .data-placeholder p { font-size: 0.82rem; color: var(--text-dim); }
 
+/* ── Report card (index entry on section pages) ── */
+a.report-card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+a.report-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent-dim);
+  transition: background 0.2s;
+}
+
+a.report-card:hover {
+  border-color: var(--border-glow);
+  box-shadow: var(--glow);
+  transform: translateY(-1px);
+}
+
+a.report-card:hover::before { background: var(--accent); }
+
+.report-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.report-date {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+}
+
+.report-result {
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid;
+}
+
+.report-result.victory { color: var(--accent); border-color: var(--accent-dim); }
+.report-result.defeat  { color: var(--accent-red); border-color: var(--accent-rust); }
+.report-result.mixed   { color: #e6b800; border-color: #6b5500; }
+
+.report-name {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--text);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.report-summary {
+  font-size: 0.83rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.report-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.report-battles { font-size: 0.68rem; letter-spacing: 0.1em; color: var(--text-dim); }
+
+.report-link {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--accent-dim);
+  transition: color 0.2s;
+}
+
+a.report-card:hover .report-link { color: var(--accent); }
+
+/* ── Battle reports ── */
+.campaign-intro {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  line-height: 1.9;
+  text-align: center;
+}
+
+.battle-section {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  margin-bottom: 3rem;
+  overflow: hidden;
+}
+
+.battle-header {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+}
+
+.battle-number {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--accent-dim);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  padding: 1rem 0.75rem;
+  background: rgba(0,20,0,0.4);
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.battle-header-detail { padding: 1.25rem 1.5rem; flex: 1; }
+
+.battle-title {
+  font-family: var(--font-mono);
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  color: var(--text);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.6rem;
+}
+
+.battle-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.battle-pts {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  background: rgba(0,20,0,0.5);
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--border);
+  letter-spacing: 0.1em;
+}
+
+.battle-opponents {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+
+.battle-outcome {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid;
+}
+
+.battle-outcome.victory  { color: var(--accent); border-color: var(--accent-dim); }
+.battle-outcome.defeat   { color: var(--accent-red); border-color: var(--accent-rust); }
+.battle-outcome.stalemate { color: #e6b800; border-color: #6b5500; }
+
+.battle-objective {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: 0.25rem;
+}
+
+.battle-report-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.full-width-image { border-bottom: 1px solid var(--border); }
+
+.battle-image-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+
+.battle-image-row .battle-report-image:first-child {
+  border-right: 1px solid var(--border);
+}
+
+.battle-report-text {
+  padding: 1.5rem;
+}
+
+.battle-report-text p {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  line-height: 1.9;
+  margin-bottom: 0.75rem;
+}
+
+.battle-report-text p:last-child { margin-bottom: 0; }
+
+.mortivar-quote {
+  color: var(--accent-dim) !important;
+  border-left: 2px solid var(--border-glow);
+  padding-left: 1rem;
+  margin-top: 1rem !important;
+}
+
+/* Campaign summary */
+.campaign-summary {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.summary-title {
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  color: var(--accent-dim);
+  margin-bottom: 1.5rem;
+}
+
+.summary-results {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.summary-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.summary-num {
+  font-family: var(--font-mono);
+  font-size: 2.5rem;
+  line-height: 1;
+  text-shadow: var(--glow);
+}
+
+.summary-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.victory-colour  { color: var(--accent); }
+.defeat-colour   { color: var(--accent-red); }
+.stalemate-colour { color: #e6b800; }
+
+.campaign-summary p {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  line-height: 1.9;
+  margin-bottom: 0.75rem;
+}
+
+.report-nav {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.report-back {
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  color: var(--accent-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.report-back:hover { color: var(--accent); text-shadow: var(--glow); }
+
 /* ── Responsive ── */
 @media (max-width: 640px) {
   header { padding: 1.5rem 1rem 0; }
   main   { padding: 2rem 1rem; }
+
+  .battle-image-row { grid-template-columns: 1fr; }
+  .battle-image-row .battle-report-image:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+  .summary-results { gap: 1.5rem; }
 }
