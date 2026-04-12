@@ -1,0 +1,418 @@
+/* =====================================================
+   ARMY LIST STYLES — shared by all list pages
+   Depends on style.css being loaded first (uses its
+   CSS variables and font).
+   ===================================================== */
+
+/* Formation colour tokens — overridden per container */
+.al-container {
+  --al-label-bg:    #3d0808;
+  --al-label-txt:   #d4a0a0;
+  --al-edge:        #8b1a1a;
+  --al-stat:        #b05828;
+  --al-border:      #432020;
+  --al-card-corner: #8b1a1a;
+  --al-loadout-sep: #2e1818;
+  --al-header-sep:  #4e2222;
+}
+
+.al-container.taghma {
+  --al-label-bg:    #0a1e0d;
+  --al-label-txt:   #7acc8a;
+  --al-edge:        #245c2e;
+  --al-stat:        #3aa84a;
+  --al-border:      #162a1a;
+  --al-card-corner: #245c2e;
+  --al-loadout-sep: #162a1a;
+  --al-header-sep:  #162a1a;
+}
+
+.al-container.titan {
+  --al-label-bg:    #5c2800;
+  --al-label-txt:   #e0b860;
+  --al-edge:        #aa5500;
+  --al-stat:        #cc7a20;
+  --al-border:      #4a2800;
+  --al-card-corner: #aa5500;
+  --al-loadout-sep: #2e1800;
+  --al-header-sep:  #4a2800;
+}
+
+/* ── List page layout ── */
+.al-page-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+.al-total-bar {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.al-total-bar span {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+}
+
+.al-total-bar span strong {
+  color: var(--accent);
+}
+
+/* ── Formation block ── */
+.al-container {
+  border: 1px solid var(--al-border);
+  background: rgba(0, 5, 0, 0.5);
+  margin-bottom: 2.5rem;
+}
+
+.al-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--al-header-sep);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.al-header h2 {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  color: var(--al-label-txt);
+  margin: 0;
+}
+
+.al-header-sub {
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.al-stats-bar {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.al-stats-bar span {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--al-stat);
+}
+
+/* ── Card grid ── */
+.al-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--al-border);
+}
+
+.al-card {
+  background: #0a0d0a;
+  padding: 1.25rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Technical corner marks */
+.al-card::before,
+.al-card::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-style: solid;
+  border-color: var(--al-card-corner);
+  opacity: 0.5;
+}
+.al-card::before { top: 4px; left: 4px; border-width: 1px 0 0 1px; }
+.al-card::after  { bottom: 4px; right: 4px; border-width: 0 1px 1px 0; }
+
+.al-card.full-width { grid-column: span 2; }
+
+/* ── Category label ── */
+.al-label {
+  display: inline-block;
+  background: var(--al-label-bg);
+  color: var(--al-label-txt);
+  border-left: 3px solid var(--al-edge);
+  padding: 3px 10px;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+/* ── Unit info ── */
+.al-unit-name {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: #ddd0bc;
+  letter-spacing: 0.04em;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.al-loadout {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--al-loadout-sep);
+}
+
+/* ── Silhouette gallery ── */
+.al-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.al-gallery.grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.al-gallery.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.al-gallery.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+/* ── Silhouette wrapper — hologram effect ── */
+.al-sil {
+  background: #000;
+  border: 1px solid #3a1010;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  height: 70px;
+}
+
+.al-sil.tall  { height: 100px; }
+.al-sil.titan { height: 280px; width: 100%; grid-column: span 2; }
+
+/* Scanline + diagonal hologram interference overlay */
+.al-sil::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px, transparent 2px,
+      rgba(0,0,0,0.5) 2px, rgba(0,0,0,0.5) 3px
+    ),
+    repeating-linear-gradient(
+      -14deg,
+      transparent       0px,  transparent      16px,
+      rgba(160,0,0,0.15) 16px, rgba(160,0,0,0.15) 21px,
+      transparent       21px, transparent       44px,
+      rgba(0,0,0,0.18)  44px, rgba(0,0,0,0.18)  52px
+    );
+}
+
+/* Dark red hologram silhouette treatment */
+.al-sil img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  filter: grayscale(1) contrast(1.6) invert(1) sepia(1) hue-rotate(340deg) saturate(4) brightness(0.65);
+  position: relative;
+  z-index: 0;
+}
+
+/* Archmagos card watermark */
+.al-card.archmagos .al-gallery::before {
+  content: '⚙';
+  position: absolute;
+  bottom: 2px; right: 4px;
+  font-size: 2.5rem;
+  color: rgba(20, 136, 50, 0.10);
+  pointer-events: none; user-select: none; z-index: 0; line-height: 1;
+}
+
+/* Binary readout under archmagos */
+.al-binary-readout {
+  font-family: var(--font-mono);
+  font-size: 6px;
+  line-height: 1.6;
+  color: rgba(20, 136, 50, 0.4);
+  letter-spacing: 0.08em;
+  padding: 4px 0 0;
+  border-top: 1px solid rgba(20, 136, 50, 0.1);
+  margin-top: 6px;
+  user-select: none;
+}
+
+/* ── Casualty tracker ── */
+.al-tracker {
+  border: 1px solid var(--border);
+  background: rgba(0,5,0,0.5);
+  margin-bottom: 2.5rem;
+}
+
+.al-tracker-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.al-tracker-header h2 {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  color: var(--text);
+  margin: 0 0 0.35rem;
+}
+
+.al-tracker-meta {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.al-tracker-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+}
+
+.al-tformation {
+  background: #0a0d0a;
+}
+
+.al-tformation.taghma  { --al-edge: #245c2e; --al-label-bg: #0a1e0d; --al-label-txt: #7acc8a; --al-border: #162a1a; }
+.al-tformation.titan   { --al-edge: #aa5500; --al-label-bg: #5c2800; --al-label-txt: #e0b860; --al-border: #4a2800; }
+
+.al-tformation-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 5px 12px;
+  border-bottom: 1px solid var(--al-border, var(--border));
+  border-left: 3px solid var(--al-edge, #8b1a1a);
+  background: var(--al-label-bg, #3d0808);
+}
+
+.al-tfname  { font-size: 0.7rem; font-weight: bold; letter-spacing: 0.08em; color: var(--al-label-txt, #d4a0a0); flex: 1; text-transform: uppercase; }
+.al-tfstats { font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.04em; white-space: nowrap; }
+
+.al-trow {
+  display: flex;
+  align-items: center;
+  padding: 3px 12px;
+  border-bottom: 1px solid rgba(60,20,20,0.2);
+  gap: 6px;
+  min-height: 26px;
+}
+
+.al-tformation.taghma .al-trow { border-bottom-color: rgba(20,60,20,0.2); }
+.al-trow:last-child { border-bottom: none; }
+
+.al-trow.bp { border-top: 1px dashed var(--al-edge, #8b1a1a); }
+
+.al-tdet  { font-size: 0.7rem; color: var(--text); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.al-tstat { font-size: 0.6rem; color: var(--text-dim); white-space: nowrap; min-width: 28px; text-align: center; }
+
+.al-boxes {
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 180px;
+}
+
+.al-boxes.grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 12px);
+  max-width: none;
+}
+
+.al-boxes input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border: 1px solid #8b1a1a;
+  background: #040202;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.al-tformation.taghma .al-boxes input[type="checkbox"] { border-color: #245c2e; }
+.al-tformation.titan  .al-boxes input[type="checkbox"] { border-color: #aa5500; }
+
+.al-boxes input[type="checkbox"]:checked { background: #3d0808; }
+.al-tformation.taghma .al-boxes input[type="checkbox"]:checked { background: #0a1e0d; }
+.al-tformation.titan  .al-boxes input[type="checkbox"]:checked { background: #5c2800; }
+
+/* ── Print ── */
+@media print {
+  /* Force browser to print background colours */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Hide everything except formations and casualty tracker */
+  header, footer, nav,
+  .al-page-header, .report-nav,
+  #bg-canvas, .scanlines, .vignette {
+    display: none !important;
+  }
+
+  main {
+    padding: 0;
+    margin: 0;
+  }
+
+  .al-container,
+  .al-tracker {
+    margin-bottom: 1rem;
+    break-inside: avoid;
+  }
+
+  .al-card { break-inside: avoid; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .al-grid { grid-template-columns: 1fr; }
+  .al-card.full-width { grid-column: span 1; }
+  .al-tracker-grid { grid-template-columns: 1fr; }
+  .al-gallery.grid-5 { grid-template-columns: repeat(5, 1fr); }
+  .al-sil.titan { height: 160px; }
+}

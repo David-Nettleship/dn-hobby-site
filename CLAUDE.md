@@ -23,9 +23,12 @@ Dark Mechanicum aesthetic throughout:
 webpages/
   index.html              Homepage — links to section pages
   style.css               Single shared stylesheet (all pages link to this)
+  army-list.css           Additional stylesheet for army list pages (loaded alongside style.css)
   bg.js                   Canvas background (all pages load this)
   legions/
     legions.html          Legions Imperialis index
+    mortivar.html         Background page — Archmagos Mortivar
+    dark-mechanicum-2k.html  Army list page — Taghmata Mortivar 2000pts
   40k/
     40k.html              Warhammer 40,000 index
   campaigns/
@@ -33,6 +36,16 @@ webpages/
   images/
     <campaign>/           Local copy of extracted PDF images (not deployed to site S3)
 ```
+
+### Section index structure (`legions.html`, `40k.html`)
+
+Each section index is divided into named groups using `<div class="section-heading"><span>NAME</span></div>`. Current groups in `legions.html`:
+
+| Section | Contents |
+|---|---|
+| BACKGROUND | Character/lore pages (e.g. mortivar.html) |
+| ARMY LISTS | Army list pages (e.g. dark-mechanicum-2k.html) |
+| BATTLE REPORTS | Campaign report pages in `campaigns/` |
 
 ### Relative path rules
 
@@ -116,6 +129,36 @@ https://dn-hobby-site-photos.s3.eu-west-2.amazonaws.com/<campaign-slug>/img-NNN.
 ```
 
 The local `webpages/images/` directory is a cache only — it is excluded from the site S3 sync.
+
+---
+
+## Adding a background/lore page
+
+Background pages live in the same folder as their section index (e.g. `webpages/legions/<slug>.html`). Use `webpages/legions/mortivar.html` as the template.
+
+Key differences from campaign pages:
+- No images required.
+- Use `campaign-intro hex-border` for the opening paragraph(s).
+- Use `battle-section` blocks for each named section, with roman numerals (`I`, `II`, …) in `battle-number` instead of `BATTLE 01`.
+- Omit `battle-meta` (no points/opponent/outcome) — just `battle-title` and `battle-report-text`.
+- Close with a `mortivar-quote` paragraph for the final statement, and a standard `report-nav` back link.
+
+Add a card to the **BACKGROUND** section in the index:
+
+```html
+<a href="<slug>.html" class="report-card">
+  <div class="report-card-header">
+    <span class="report-date">FIELD RECORD</span>
+    <span class="report-result">FACTION NAME</span>
+  </div>
+  <h3 class="report-name">Subject Name</h3>
+  <p class="report-summary">One or two sentences of summary.</p>
+  <div class="report-card-footer">
+    <span class="report-battles">FACTION &nbsp;|&nbsp; ERA</span>
+    <span class="report-link">READ BACKGROUND →</span>
+  </div>
+</a>
+```
 
 ---
 
@@ -244,6 +287,19 @@ Report card result classes: `victory` (green), `defeat` (red), `mixed` (amber).
 ```bash
 ./deploy.sh all <slug>    # uploads photos and syncs the site + invalidates cache
 ```
+
+---
+
+## Army list pages — print behaviour
+
+Army list pages load `army-list.css` in addition to `style.css`. That stylesheet includes a `@media print` block that:
+
+- Hides the site header, footer, nav, page header (`.al-page-header`), back-link (`.report-nav`), and all canvas/overlay elements.
+- Silhouette galleries (`.al-gallery`) are preserved in print.
+- Preserves all page colours and dark theme (`print-color-adjust: exact`).
+- Leaves only the formation blocks (`.al-container`) and the casualty tracker (`.al-tracker`) visible.
+
+No per-page print CSS is needed — it is handled entirely in `army-list.css`.
 
 ---
 
