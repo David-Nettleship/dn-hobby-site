@@ -139,6 +139,12 @@
   background: var(--al-border);
 }
 
+/* Fill any empty trailing cell with the card background, not the border colour */
+.al-grid::after {
+  content: '';
+  background: #0a0d0a;
+}
+
 .al-card {
   background: #0a0d0a;
   padding: 1.25rem;
@@ -184,6 +190,16 @@
   letter-spacing: 0.04em;
   display: block;
   margin-bottom: 0.35rem;
+}
+
+.al-pilot {
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+  display: block;
+  margin-top: -0.2rem;
+  margin-bottom: 0.35rem;
+  font-style: italic;
 }
 
 .al-loadout {
@@ -300,6 +316,41 @@
   padding: 4px 0 0;
   border-top: 1px solid rgba(20, 136, 50, 0.1);
   margin-top: 6px;
+  user-select: none;
+}
+
+/* ── Filler card (decorative placeholder for odd trailing cell) ── */
+.al-card.al-filler {
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 80px;
+}
+
+/* Suppress the corner marks on filler cells */
+.al-card.al-filler::before,
+.al-card.al-filler::after {
+  display: none;
+}
+
+.al-filler-sigils {
+  display: flex;
+  gap: 1.2rem;
+  color: var(--al-card-corner);
+  opacity: 0.18;
+  font-size: 1.6rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.al-filler-binary {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  line-height: 1.9;
+  color: var(--al-card-corner);
+  opacity: 0.22;
+  letter-spacing: 0.06em;
+  text-align: center;
   user-select: none;
 }
 
@@ -446,6 +497,33 @@
   }
 
   .al-card { break-inside: avoid; }
+
+  /* Binary text overlay — floods the grid area so the coloured background
+     at page breaks is covered with text rather than a bare colour block.
+     Cards sit on top via DOM order; only the exposed gap areas show the text. */
+  .al-grid { position: relative; }
+  .al-grid::before {
+    content:
+      '01001100 01000101 01000111 01001001 01001111 01001110 01010011 00111010 01000100 01000001 01010100 01000001 00101110 01001110 01010101 01001100\A'
+      '01001100 01010011 01011001 01001110 01000011 01001000 00101110 01000101 01000111 01001001 01001111 01001110 01010011 00111010 01000100 01000001\A'
+      '01010100 01000001 00101110 01001110 01010101 01001100 01001100 01010011 01011001 01001110 01000011 01001000 00101110 01001101 01000101 01000011\A'
+      '01001000 01000001 01001110 01001001 01000011 01010101 01001101 00111010 01001111 01001110 01001100 01001001 01001110 01000101 00101110 01010100\A'
+      '01010010 01000001 01001001 01010100 01001111 01010010 00111010 01000100 01000001 01010010 01001011 00101110 01001101 01000101 01000011 01001000\A'
+      '01001100 01000101 01000111 01001001 01001111 01001110 01010011 00111010 01000100 01000001 01010100 01000001 00101110 01001110 01010101 01001100\A'
+      '01001100 01010011 01011001 01001110 01000011 01001000 00101110 01000101 01000111 01001001 01001111 01001110 01010011 00111010 01000100 01000001\A'
+      '01010100 01000001 00101110 01001110 01010101 01001100 01001100 01010011 01011001 01001110 01000011 01001000 00101110 01001101 01000101 01000011\A'
+      '01001000 01000001 01001110 01001001 01000011 01010101 01001101 00111010 01001111 01001110 01001100 01001001 01001110 01000101 00101110 01010100\A'
+      '01010010 01000001 01001001 01010100 01001111 01010010 00111010 01000100 01000001 01010010 01001011 00101110 01001101 01000101 01000011 01001000\A';
+    position: absolute;
+    inset: 0;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 6px;
+    line-height: 2;
+    color: rgba(255, 255, 255, 0.18);
+    white-space: pre;
+    overflow: hidden;
+    pointer-events: none;
+  }
 }
 
 /* ── Responsive ── */
