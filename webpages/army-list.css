@@ -38,6 +38,28 @@
   --al-header-sep:  #4a2800;
 }
 
+.al-container.ec {
+  --al-label-bg:    #1e0035;
+  --al-label-txt:   #ddb0ff;
+  --al-edge:        #7030c0;
+  --al-stat:        #9944cc;
+  --al-border:      #2e0050;
+  --al-card-corner: #7030c0;
+  --al-loadout-sep: #1e0035;
+  --al-header-sep:  #2e0050;
+}
+
+.al-container.aux {
+  --al-label-bg:    #1a1400;
+  --al-label-txt:   #f0d090;
+  --al-edge:        #b8900a;
+  --al-stat:        #d4aa20;
+  --al-border:      #2e2400;
+  --al-card-corner: #b8900a;
+  --al-loadout-sep: #1a1400;
+  --al-header-sep:  #2e2400;
+}
+
 /* ── List page layout ── */
 .al-page-header {
   margin-bottom: 2.5rem;
@@ -248,6 +270,16 @@
   z-index: 0;
 }
 
+/* Purple hologram — Emperor's Children */
+.al-container.ec .al-sil img {
+  filter: grayscale(1) contrast(1.6) invert(1) sepia(1) hue-rotate(260deg) saturate(4) brightness(0.65);
+}
+
+/* Gold hologram — Solar Auxilia */
+.al-container.aux .al-sil img {
+  filter: grayscale(1) contrast(1.6) invert(1) sepia(1) hue-rotate(20deg) saturate(3) brightness(0.7);
+}
+
 /* Archmagos card watermark */
 .al-card.archmagos .al-gallery::before {
   content: '⚙';
@@ -316,6 +348,8 @@
 
 .al-tformation.taghma  { --al-edge: #245c2e; --al-label-bg: #0a1e0d; --al-label-txt: #7acc8a; --al-border: #162a1a; }
 .al-tformation.titan   { --al-edge: #aa5500; --al-label-bg: #5c2800; --al-label-txt: #e0b860; --al-border: #4a2800; }
+.al-tformation.ec      { --al-edge: #7030c0; --al-label-bg: #1e0035; --al-label-txt: #ddb0ff; --al-border: #2e0050; }
+.al-tformation.aux     { --al-edge: #b8900a; --al-label-bg: #1a1400; --al-label-txt: #f0d090; --al-border: #2e2400; }
 
 .al-tformation-header {
   display: flex;
@@ -340,6 +374,8 @@
 }
 
 .al-tformation.taghma .al-trow { border-bottom-color: rgba(20,60,20,0.2); }
+.al-tformation.ec     .al-trow { border-bottom-color: rgba(80,20,140,0.2); }
+.al-tformation.aux    .al-trow { border-bottom-color: rgba(140,110,0,0.2); }
 .al-trow:last-child { border-bottom: none; }
 
 .al-trow.bp { border-top: 1px dashed var(--al-edge, #8b1a1a); }
@@ -374,10 +410,14 @@
 
 .al-tformation.taghma .al-boxes input[type="checkbox"] { border-color: #245c2e; }
 .al-tformation.titan  .al-boxes input[type="checkbox"] { border-color: #aa5500; }
+.al-tformation.ec     .al-boxes input[type="checkbox"] { border-color: #7030c0; }
+.al-tformation.aux    .al-boxes input[type="checkbox"] { border-color: #b8900a; }
 
 .al-boxes input[type="checkbox"]:checked { background: #3d0808; }
 .al-tformation.taghma .al-boxes input[type="checkbox"]:checked { background: #0a1e0d; }
 .al-tformation.titan  .al-boxes input[type="checkbox"]:checked { background: #5c2800; }
+.al-tformation.ec     .al-boxes input[type="checkbox"]:checked { background: #1e0035; }
+.al-tformation.aux    .al-boxes input[type="checkbox"]:checked { background: #1a1400; }
 
 /* ── Print ── */
 @media print {
