@@ -10,7 +10,7 @@ Dark Mechanicum aesthetic throughout:
 
 - **Palette** — near-black background (`#080a08`), toxic machine-green (`#7cfc00`) as primary accent, corrupted red (`#c0392b`) for dark/corrupted elements.
 - **Typography** — `Share Tech Mono` (Google Fonts) for all text including headings. Everything is monospace; no decorative serif fonts.
-- **Title format** — `FORGE.NODE<span class="corrupted">//NETTLESHIP</span>` with a blinking cursor appended via CSS.
+- **Title format** — `FORGE.NODE<span class="corrupted">//MORTIVAR</span>` with a blinking cursor appended via CSS.
 - **Subtitle** — `[SYS_BOOT:OK] :: [COGITATOR:ONLINE] :: [NOOSPHERIC_UPLINK:NOMINAL]` (or the index variant `[NOOSPHERE_UPLINK:CORRUPTED]`).
 - **Background** — animated canvas (`bg.js`) with falling binary columns and rotating sigil overlays. CRT scanlines and radial vignette overlaid on top.
 - **Binary text** — decorative `<p class="binary-text">` rows of space-separated 8-bit binary words used as section dividers. Content is thematic flavour, not meaningful data.
@@ -21,31 +21,34 @@ Dark Mechanicum aesthetic throughout:
 
 ```
 webpages/
-  index.html              Homepage — links to section pages
+  index.html              Homepage — links to Legions Imperialis and Battle Reports
   style.css               Single shared stylesheet (all pages link to this)
   army-list.css           Additional stylesheet for army list pages (loaded alongside style.css)
   bg.js                   Canvas background (all pages load this)
   legions/
     legions.html          Legions Imperialis index
-    mortivar.html         Background page — Archmagos Mortivar
-    dark-mechanicum-2k.html  Army list page — Taghmata Mortivar 2000pts
-  40k/
-    40k.html              Warhammer 40,000 index
-  campaigns/
-    <slug>.html           One file per campaign/battle report
+    battle-reports.html   Battle reports index
+    background/
+      mortivar.html       Background page — Archmagos Mortivar
+      vhalor-xxvi.html    Background page — Vhalor XXVI theatre record
+    lists/
+      <slug>.html         One file per army list (e.g. dark-mechanicum-2k-may.html)
+    campaigns/
+      <slug>.html         One file per campaign/battle report
   images/
     <campaign>/           Local copy of extracted PDF images (not deployed to site S3)
 ```
 
-### Section index structure (`legions.html`, `40k.html`)
+### Section index structure (`legions.html`)
 
 Each section index is divided into named groups using `<div class="section-heading"><span>NAME</span></div>`. Current groups in `legions.html`:
 
 | Section | Contents |
 |---|---|
-| BACKGROUND | Character/lore pages (e.g. mortivar.html) |
-| ARMY LISTS | Army list pages (e.g. dark-mechanicum-2k.html) |
-| BATTLE REPORTS | Campaign report pages in `campaigns/` |
+| BACKGROUND | Character/lore pages in `background/` |
+| DARK MECHANICUM — ARMY LISTS | Army list pages in `lists/` |
+
+Battle reports have their own index page: `battle-reports.html`.
 
 ### Relative path rules
 
@@ -55,15 +58,16 @@ Every page resolves assets relative to its own location:
 |---|---|---|---|
 | `webpages/` | `style.css` | `bg.js` | — |
 | `webpages/legions/` | `../style.css` | `../bg.js` | `../index.html` |
-| `webpages/40k/` | `../style.css` | `../bg.js` | `../index.html` |
-| `webpages/campaigns/` | `../style.css` | `../bg.js` | `../index.html` |
+| `webpages/legions/background/` | `../../style.css` | `../../bg.js` | `../../index.html` |
+| `webpages/legions/lists/` | `../../style.css` | `../../army-list.css` | `../../index.html` |
+| `webpages/legions/campaigns/` | `../../style.css` | `../../bg.js` | `../../index.html` |
 
-Cross-links between sections always use explicit filenames — never trailing `/` or `index.html`:
+Cross-links always use explicit filenames — never trailing `/`:
 
 ```html
-<!-- From campaigns/ -->
-<a href="../legions/legions.html">LEGIONS IMPERIALIS</a>
-<a href="../40k/40k.html">WARHAMMER 40,000</a>
+<!-- From legions/campaigns/ -->
+<a href="../legions.html">LEGIONS IMPERIALIS</a>
+<a href="../battle-reports.html">BATTLE REPORTS</a>
 ```
 
 ---
@@ -77,14 +81,14 @@ Every page (except `index.html`) uses this header/nav shell. Copy it exactly, ch
   <div class="header-inner">
     <div class="sigil-mark">⚙</div>
     <a href="../index.html" class="site-title-link">
-      <h1 class="site-title">FORGE.NODE<span class="corrupted">//NETTLESHIP</span></h1>
+      <h1 class="site-title">FORGE.NODE<span class="corrupted">//MORTIVAR</span></h1>
     </a>
     <p class="site-subtitle">[SYS_BOOT:OK] :: [COGITATOR:ONLINE] :: [NOOSPHERIC_UPLINK:NOMINAL]</p>
   </div>
   <nav>
     <a href="../legions/legions.html" class="nav-link [active]">LEGIONS IMPERIALIS</a>
     <span class="nav-sep">⬡</span>
-    <a href="../40k/40k.html" class="nav-link [active]">WARHAMMER 40,000</a>
+    <a href="../legions/battle-reports.html" class="nav-link [active]">BATTLE REPORTS</a>
   </nav>
 </header>
 ```
