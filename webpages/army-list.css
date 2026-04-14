@@ -470,38 +470,147 @@
 .al-tformation.ec     .al-boxes input[type="checkbox"]:checked { background: #1e0035; }
 .al-tformation.aux    .al-boxes input[type="checkbox"]:checked { background: #1a1400; }
 
-/* ── Print ── */
-@media print {
-  /* Force browser to print background colours */
-  * {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
+/* ── Print (black and white, inverted) ── */
+@page { margin: 0; }
 
-  /* Hide everything except formations and casualty tracker */
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
   header, footer, nav,
-  .al-page-header, .report-nav,
-  #bg-canvas, .scanlines, .vignette {
+  .report-nav, #bg-canvas, .scanlines, .vignette {
     display: none !important;
   }
 
-  main {
-    padding: 0;
-    margin: 0;
+  html, body { background: #fff !important; color: #111 !important; }
+  main { padding: 0.7cm 0.9cm; margin: 0; }
+
+  .al-page-header { border-bottom-color: #ccc; margin-bottom: 1rem; padding-bottom: 0.75rem; }
+  .al-page-header .page-title { color: #000; text-shadow: none; }
+  .al-page-header .al-total-bar span { color: #444; }
+
+  /* ── Formation colour tokens → light versions ── */
+  .al-container {
+    --al-label-bg:    #f5e8e8;
+    --al-label-txt:   #7a1a1a;
+    --al-edge:        #cc4444;
+    --al-stat:        #993322;
+    --al-border:      #e0c0c0;
+    --al-card-corner: #cc4444;
+    --al-loadout-sep: #ead0d0;
+    --al-header-sep:  #e0c8c8;
+  }
+  .al-container.taghma {
+    --al-label-bg:    #e8f5e8;
+    --al-label-txt:   #1a5c1a;
+    --al-edge:        #2a7a2a;
+    --al-stat:        #1a5c1a;
+    --al-border:      #c0e0c0;
+    --al-card-corner: #2a7a2a;
+    --al-loadout-sep: #d0e8d0;
+    --al-header-sep:  #c8e0c8;
+  }
+  .al-container.titan {
+    --al-label-bg:    #fff3e0;
+    --al-label-txt:   #7a3a00;
+    --al-edge:        #cc6600;
+    --al-stat:        #995500;
+    --al-border:      #f0d0a0;
+    --al-card-corner: #cc6600;
+    --al-loadout-sep: #f0e0c0;
+    --al-header-sep:  #e8d4a8;
+  }
+  .al-container.ec {
+    --al-label-bg:    #f0e8ff;
+    --al-label-txt:   #5020a0;
+    --al-edge:        #7030c0;
+    --al-stat:        #5020a0;
+    --al-border:      #d8c0f0;
+    --al-card-corner: #7030c0;
+    --al-loadout-sep: #e8d8f8;
+    --al-header-sep:  #d8c0f0;
+  }
+  .al-container.aux {
+    --al-label-bg:    #fff8e0;
+    --al-label-txt:   #7a5a00;
+    --al-edge:        #b8900a;
+    --al-stat:        #8a6a00;
+    --al-border:      #f0e0a0;
+    --al-card-corner: #b8900a;
+    --al-loadout-sep: #f0e8c0;
+    --al-header-sep:  #e8d8a0;
   }
 
-  .al-container,
-  .al-tracker {
-    margin-bottom: 1rem;
+  /* ── Formation blocks ── */
+  .al-container {
+    border: 1px solid var(--al-border);
+    background: #fff;
+    margin-bottom: 0.8rem;
     break-inside: avoid;
   }
+  .al-header { background: var(--al-label-bg); border-bottom-color: var(--al-header-sep); }
+  .al-header h2 { color: var(--al-label-txt); }
+  .al-header-sub { color: #666; }
+  .al-stats-bar span { color: var(--al-stat); }
 
-  .al-card { break-inside: avoid; }
+  .al-grid { background: var(--al-border); position: relative; }
+  .al-grid::after { background: #fff; }
+  .al-card { background: #fff; break-inside: avoid; }
+  .al-card::before, .al-card::after { border-color: var(--al-card-corner); }
 
-  /* Binary text overlay — floods the grid area so the coloured background
-     at page breaks is covered with text rather than a bare colour block.
-     Cards sit on top via DOM order; only the exposed gap areas show the text. */
-  .al-grid { position: relative; }
+  .al-label { background: var(--al-label-bg); color: var(--al-label-txt); border-left-color: var(--al-edge); }
+  .al-unit-name { color: #111; }
+  .al-loadout { color: #555; border-bottom-color: var(--al-loadout-sep); }
+  .al-pilot { color: #777; }
+
+  /* ── Silhouettes: black on white ── */
+  .al-sil { background: #fff !important; border-color: #ccc; }
+  .al-sil::after { display: none; }
+  .al-sil img,
+  .al-container.ec  .al-sil img,
+  .al-container.aux .al-sil img {
+    filter: grayscale(1) contrast(2);
+  }
+
+  .al-binary-readout { color: #bbb; border-top-color: #ddd; }
+  .al-card.archmagos .al-gallery::before { color: rgba(0,0,0,0.04); }
+
+  /* ── Filler card ── */
+  .al-filler-sigils { color: #bbb; opacity: 1; }
+  .al-filler-binary { color: #ccc; opacity: 1; }
+
+  /* ── Casualty tracker ── */
+  .al-tracker { border-color: #ddd; background: #fff; margin-bottom: 0.8rem; break-inside: avoid; }
+  .al-tracker-header { background: #f5f5f5; border-bottom-color: #ddd; }
+  .al-tracker-header h2 { color: #111; }
+  .al-tracker-meta { color: #666; }
+  .al-tracker-grid { background: #ddd; }
+
+  .al-tformation { background: #fff; }
+  .al-tformation.taghma { --al-edge: #2a7a2a; --al-label-bg: #e8f5e8; --al-label-txt: #1a5c1a; --al-border: #c0e0c0; }
+  .al-tformation.titan   { --al-edge: #cc6600; --al-label-bg: #fff3e0; --al-label-txt: #7a3a00; --al-border: #f0d0a0; }
+  .al-tformation.ec      { --al-edge: #7030c0; --al-label-bg: #f0e8ff; --al-label-txt: #5020a0; --al-border: #d8c0f0; }
+  .al-tformation.aux     { --al-edge: #b8900a; --al-label-bg: #fff8e0; --al-label-txt: #7a5a00; --al-border: #f0e0a0; }
+
+  .al-tformation-header { background: var(--al-label-bg); border-bottom-color: var(--al-border); border-left-color: var(--al-edge); }
+  .al-tfname  { color: var(--al-label-txt); }
+  .al-tfstats { color: #666; }
+
+  .al-trow { border-bottom-color: rgba(0,0,0,0.08); }
+  .al-tformation.taghma .al-trow,
+  .al-tformation.ec     .al-trow,
+  .al-tformation.aux    .al-trow { border-bottom-color: rgba(0,0,0,0.08); }
+  .al-trow.bp { border-top-color: var(--al-edge, #cc4444); }
+  .al-tdet  { color: #111; }
+  .al-tstat { color: #555; }
+
+  .al-boxes input[type="checkbox"]                        { border-color: #999; background: #fff; }
+  .al-tformation.taghma .al-boxes input[type="checkbox"] { border-color: #2a7a2a; }
+  .al-tformation.titan  .al-boxes input[type="checkbox"] { border-color: #cc6600; }
+  .al-tformation.ec     .al-boxes input[type="checkbox"] { border-color: #7030c0; }
+  .al-tformation.aux    .al-boxes input[type="checkbox"] { border-color: #b8900a; }
+  .al-boxes input[type="checkbox"]:checked               { background: #ddd; }
+
+  /* ── Binary text overlay — dark on white ── */
   .al-grid::before {
     content:
       '01001100 01000101 01000111 01001001 01001111 01001110 01010011 00111010 01000100 01000001 01010100 01000001 00101110 01001110 01010101 01001100\A'
@@ -519,7 +628,7 @@
     font-family: 'Share Tech Mono', monospace;
     font-size: 6px;
     line-height: 2;
-    color: rgba(255, 255, 255, 0.18);
+    color: rgba(0, 0, 0, 0.1);
     white-space: pre;
     overflow: hidden;
     pointer-events: none;
