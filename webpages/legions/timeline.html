@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timeline — Taghmata Mortivar | FORGE.NODE//MORTIVAR</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Timeline layout ── */
+    .tl-container {
+      max-width: 760px;
+      margin: 0 auto;
+      position: relative;
+      padding-left: 3rem;
+    }
+
+    .tl-container::before {
+      content: '';
+      position: absolute;
+      left: 0.75rem;
+      top: 0.4rem;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--border-glow), transparent);
+    }
+
+    .tl-event {
+      position: relative;
+      margin-bottom: 3rem;
+    }
+
+    .tl-marker {
+      position: absolute;
+      left: -2.3rem;
+      top: 0.35rem;
+      width: 10px;
+      height: 10px;
+      border: 1px solid var(--accent);
+      background: var(--bg);
+      box-shadow: var(--glow);
+      transform: rotate(45deg);
+    }
+
+    .tl-date {
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      margin-bottom: 0.2rem;
+    }
+
+    .tl-era {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      margin-bottom: 0.6rem;
+    }
+
+    .tl-title {
+      font-family: var(--font-mono);
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--text);
+      letter-spacing: 0.08em;
+      margin: 0 0 0.75rem;
+    }
+
+    .tl-body {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.9;
+      margin-bottom: 0.75rem;
+    }
+
+    .tl-body p { margin-bottom: 0.5rem; }
+    .tl-body p:last-child { margin-bottom: 0; }
+
+    .tl-link {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 0.75rem 1rem;
+      display: inline-flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      text-decoration: none;
+      margin-top: 0.75rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .tl-link:hover {
+      border-color: var(--accent);
+      background: var(--surface-2);
+    }
+
+    .tl-link-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: var(--text-dim);
+    }
+
+    .tl-link-name {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+    }
+
+    /* Terminal event — corrupted red */
+    .tl-event.tl-terminus .tl-marker {
+      border-color: var(--accent-red);
+      box-shadow: 0 0 8px rgba(192, 57, 43, 0.5);
+    }
+
+    .tl-event.tl-terminus .tl-date {
+      color: var(--accent-red);
+    }
+
+    .tl-event.tl-terminus .tl-title {
+      color: var(--accent-red);
+      text-shadow: 0 0 8px rgba(192, 57, 43, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+  <div class="scanlines"></div>
+  <div class="vignette"></div>
+
+  <header>
+    <div class="header-inner">
+      <div class="sigil-mark">⚙</div>
+      <a href="../index.html" class="site-title-link">
+        <h1 class="site-title">FORGE.NODE<span class="corrupted">//MORTIVAR</span></h1>
+      </a>
+      <p class="site-subtitle">[SYS_BOOT:OK] :: [COGITATOR:ONLINE] :: [NOOSPHERIC_UPLINK:NOMINAL]</p>
+    </div>
+    <nav>
+      <a href="legions.html" class="nav-link active">BACKGROUND</a>
+      <span class="nav-sep">⬡</span>
+      <a href="army-lists.html" class="nav-link">ARMY LISTS</a>
+      <span class="nav-sep">⬡</span>
+      <a href="battle-reports.html" class="nav-link">BATTLE REPORTS</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="page-header">
+      <p class="binary-text">01010100 01001001 01001101 01000101 01001100 01001001 01001110 01000101 00111010 01001101 01001111 01010010 01010100 01001001 01010110 01000001 01010010</p>
+      <h2 class="page-title">OPERATIONAL TIMELINE // TAGHMATA MORTIVAR</h2>
+      <p class="page-desc">Chronological record of Archmagos Mortivar's actions before and during the Horus Heresy. Compiled from cogitator-vault archives and surviving field records.</p>
+    </div>
+
+    <div class="tl-container">
+
+      <!-- ── Event 1: IW Data Theft ── -->
+      <div class="tl-event">
+        <div class="tl-marker"></div>
+        <div class="tl-date">ca. 003.M31</div>
+        <div class="tl-era">PRE-HERESY &nbsp;|&nbsp; VHALOR CORRIDOR</div>
+        <h3 class="tl-title">THE IVth LEGION RAIDS THE WAYSTATION ARCHIVES</h3>
+        <div class="tl-body">
+          <p>In the years before the Heresy breaks, IVth Legion operatives move systematically through Mechanicum waystation-archives along the Vhalor warp corridor. Among the intelligence taken from Mortivar's secured research caches: fragmented but recoverable copies of his consciousness-replication lattice — the core of a decades-long programme that would, in his own words, render death <em>an administrative problem</em>.</p>
+          <p>The Iron Warriors do not know what they have stolen. To them, it is leverage, or merely thorough. To Mortivar, it is an open wound in the data-record of the self. He marks it and waits.</p>
+        </div>
+      </div>
+
+      <!-- ── Event 2: Schism of Mars ── -->
+      <div class="tl-event">
+        <div class="tl-marker"></div>
+        <div class="tl-date">005.M31</div>
+        <div class="tl-era">EARLY HERESY &nbsp;|&nbsp; MARS</div>
+        <h3 class="tl-title">THE SCHISM OF MARS — DEFENCE OF THE MORTIVAR HOLDINGS</h3>
+        <div class="tl-body">
+          <p>When Fabricator-General Kelbor-Hal declares for Horus and civil war erupts across the Red Planet, Mortivar's forge-holdings become a priority target for the loyalist counter-offensive.</p>
+          <p>The Saturnyne Rams — a Solar Auxilia cohort operating under Rogal Dorn's broader effort to retrieve vital arms and armour from Mars — advance on his positions with Legio Ignatum engine support. The Fire Wasps' Titans press through the industrial wastelands surrounding Mortivar's outer cordon.</p>
+          <p class="mortivar-quote">The Rams calculated we were a secondary objective.<br>That miscalculation cost them dearly.</p>
+        </div>
+        <a href="campaigns/schism-of-mars.html" class="tl-link">
+          <span class="tl-link-label">BATTLE REPORT</span>
+          <span class="tl-link-name">The Schism of Mars →</span>
+        </a>
+      </div>
+
+      <!-- ── Event 3: Vhalor XXVI ── -->
+      <div class="tl-event">
+        <div class="tl-marker"></div>
+        <div class="tl-date">ca. 006.M31</div>
+        <div class="tl-era">EARLY HERESY &nbsp;|&nbsp; HIVE KARTHAX, VHALOR XXVI</div>
+        <h3 class="tl-title">VHALOR XXVI — THE IRON RECKONING</h3>
+        <div class="tl-body">
+          <p>An Iron Warriors grand cruiser, the <em>Iron Reckoning</em>, falls from the sky and embeds itself in the single hive of the minor world Vhalor XXVI. To the wider war, it represents fleet-routing archives and Legion deployment logs — intelligence worth fighting over. To Mortivar, it represents something far more specific: the stolen data, now drifting within reach.</p>
+          <p>The Autokratorii Regiment and Legio Cybernetica Cohort advance on Hive Karthax in support of the wider traitor assault. House Vextrix holds the vanguard. A Warhound of Legio Mortis marches with a cortex-monitoring relay of Mortivar's own design fitted to its manifold. The walls must be secured before the vaults can be opened.</p>
+        </div>
+        <a href="background/vhalor-xxvi.html" class="tl-link">
+          <span class="tl-link-label">THEATRE RECORD</span>
+          <span class="tl-link-name">Vhalor XXVI — The Iron Reckoning →</span>
+        </a>
+      </div>
+
+      <!-- ── Event 4: Radiances Totalus IV ── -->
+      <div class="tl-event">
+        <div class="tl-marker"></div>
+        <div class="tl-date">ca. 009.M31</div>
+        <div class="tl-era">MID HERESY &nbsp;|&nbsp; EYE OF TERROR FRINGE</div>
+        <h3 class="tl-title">THE CAMPAIGN FOR RADIANCES TOTALUS IV</h3>
+        <div class="tl-body">
+          <p>With the Schism of Mars concluded and his holdings on the Red Planet secured, Mortivar and supporting Mechanicum forces are dispatched to the very cusp of the Eye of Terror to take part in the campaign for Radiances Totalus IV, a world ancient enough to predate Imperial cartography.</p>
+          <p>Three engagements follow: the reclamation of the fallen Imperator Titan <em>Dread March Eternal</em>, the contested vault-complexes beneath the shattered city of Byzant Aeturnis, and the catastrophic betrayal at Ghul-Kharas Arcology, where the World Eaters turn on their own allies. Mortivar deems the campaign a net success. The <em>Dread March Eternal</em> reclamation improves his standing among the Legio Mortis. Other debts are noted for later settlement.</p>
+        </div>
+        <a href="background/radiances-totalus-iv.html" class="tl-link">
+          <span class="tl-link-label">THEATRE RECORD</span>
+          <span class="tl-link-name">Radiances Totalus IV — The Cusp of the Eye →</span>
+        </a>
+        <a href="campaigns/radiances-totalus-iv.html" class="tl-link">
+          <span class="tl-link-label">BATTLE REPORT</span>
+          <span class="tl-link-name">The Battle for Radiances Totalus IV →</span>
+        </a>
+      </div>
+
+      <!-- ── Event 5: Siege of Terra ── -->
+      <div class="tl-event tl-terminus">
+        <div class="tl-marker"></div>
+        <div class="tl-date">014.M31</div>
+        <div class="tl-era">LATE HERESY &nbsp;|&nbsp; TERRA</div>
+        <h3 class="tl-title">THE SIEGE OF TERRA</h3>
+        <div class="tl-body">
+          <p>The campaign reaches its terminus. Mortivar and his Taghmata march with the host of Horus to the walls of the Imperial Palace — the final accounting of the age of flesh. Whether he is there to witness the end of the Emperor, to secure the data-vaults beneath the Eternity Gate, or simply because the calculus of self-preservation has carried him this far, only Mortivar's cogitator-records know.</p>
+          <p>He arrives. He endures. In some form or another, he always does.</p>
+          <p class="mortivar-quote">The Siege is simply a very large discontinuity in the data-flow.<br>We have survived smaller ones.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="report-nav">
+      <a href="legions.html" class="report-back">← RETURN TO LEGIONS IMPERIALIS</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <p class="binary-text">01010100 01001001 01001101 01000101 01001100 01001001 01001110 01000101 00111010 01000101 01001110 01000100</p>
+    <p class="footer-text">FORGE.NODE//MORTIVAR :: PRAISE THE OMNISSIAH :: ALL DATA IS SACRED</p>
+  </footer>
+
+  <script src="../bg.js"></script>
+</body>
+</html>
