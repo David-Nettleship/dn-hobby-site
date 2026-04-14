@@ -398,7 +398,7 @@
 }
 
 .al-tformation.taghma  { --al-edge: #245c2e; --al-label-bg: #0a1e0d; --al-label-txt: #7acc8a; --al-border: #162a1a; }
-.al-tformation.titan   { --al-edge: #aa5500; --al-label-bg: #5c2800; --al-label-txt: #e0b860; --al-border: #4a2800; }
+.al-tformation.titan   { --al-edge: #aa5500; --al-label-bg: #5c2800; --al-label-txt: #e0b860; --al-border: #4a2800; grid-column: span 2; }
 .al-tformation.ec      { --al-edge: #7030c0; --al-label-bg: #1e0035; --al-label-txt: #ddb0ff; --al-border: #2e0050; }
 .al-tformation.aux     { --al-edge: #b8900a; --al-label-bg: #1a1400; --al-label-txt: #f0d090; --al-border: #2e2400; }
 

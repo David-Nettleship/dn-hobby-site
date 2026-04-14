@@ -373,25 +373,6 @@ footer {
   margin-top: 0.5rem;
 }
 
-/* ── Data placeholder (empty sections) ── */
-.data-placeholder {
-  border: 1px dashed var(--border);
-  padding: 2rem;
-  text-align: center;
-  opacity: 0.5;
-  margin-bottom: 1rem;
-}
-
-.placeholder-label {
-  display: block;
-  font-size: 0.72rem;
-  letter-spacing: 0.25em;
-  color: var(--accent-dim);
-  margin-bottom: 0.5rem;
-}
-
-.data-placeholder p { font-size: 0.82rem; color: var(--text-dim); }
-
 /* ── Report card (index entry on section pages) ── */
 a.report-card {
   display: block;
@@ -445,9 +426,9 @@ a.report-card:hover::before { background: var(--accent); }
   border: 1px solid;
 }
 
-.report-result.victory { color: var(--accent); border-color: var(--accent-dim); }
-.report-result.defeat  { color: var(--accent-red); border-color: var(--accent-rust); }
-.report-result.mixed   { color: #e6b800; border-color: #6b5500; }
+.report-result.victory, .battle-outcome.victory   { color: var(--accent);     border-color: var(--accent-dim);  }
+.report-result.defeat,  .battle-outcome.defeat    { color: var(--accent-red); border-color: var(--accent-rust); }
+.report-result.mixed,   .battle-outcome.stalemate { color: #e6b800;           border-color: #6b5500;            }
 
 .report-name {
   font-family: var(--font-mono);
@@ -559,9 +540,6 @@ a.report-card:hover .report-link { color: var(--accent); }
   border: 1px solid;
 }
 
-.battle-outcome.victory  { color: var(--accent); border-color: var(--accent-dim); }
-.battle-outcome.defeat   { color: var(--accent-red); border-color: var(--accent-rust); }
-.battle-outcome.stalemate { color: #e6b800; border-color: #6b5500; }
 
 .battle-objective {
   font-size: 0.78rem;
@@ -676,6 +654,122 @@ a.report-card:hover .report-link { color: var(--accent); }
 }
 
 .report-back:hover { color: var(--accent); text-shadow: var(--glow); }
+
+
+/* ── Timeline ── */
+.tl-container {
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+  padding-left: 3rem;
+}
+
+.tl-container::before {
+  content: '';
+  position: absolute;
+  left: 0.75rem;
+  top: 0.4rem;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--border-glow), transparent);
+}
+
+.tl-event {
+  position: relative;
+  margin-bottom: 4rem;
+  padding-bottom: 1rem;
+}
+
+.tl-event:last-child { margin-bottom: 0; }
+
+.tl-marker {
+  position: absolute;
+  left: -2.3rem;
+  top: 0.35rem;
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--accent);
+  background: var(--bg);
+  box-shadow: var(--glow);
+  transform: rotate(45deg);
+}
+
+.tl-date {
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+
+.tl-era {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+  margin-bottom: 0.6rem;
+}
+
+.tl-title {
+  font-family: var(--font-mono);
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: var(--text);
+  letter-spacing: 0.08em;
+  margin: 0 0 0.75rem;
+}
+
+.tl-body {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.9;
+  margin-bottom: 0.75rem;
+}
+
+.tl-body p { margin-bottom: 0.6rem; }
+.tl-body p:last-child { margin-bottom: 0; }
+
+.tl-link {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 0.75rem 1rem;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-decoration: none;
+  margin-top: 0.75rem;
+  margin-right: 0.5rem;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.tl-link:hover {
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+
+.tl-link-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: var(--text-dim);
+}
+
+.tl-link-name {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.tl-event.tl-terminus .tl-marker {
+  border-color: var(--accent-red);
+  box-shadow: 0 0 8px rgba(192, 57, 43, 0.5);
+}
+
+.tl-event.tl-terminus .tl-date  { color: var(--accent-red); }
+.tl-event.tl-terminus .tl-title { color: var(--accent-red); text-shadow: 0 0 8px rgba(192, 57, 43, 0.3); }
+
+/* ── Print — shared baseline ── */
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  header, footer, nav, .report-nav, #bg-canvas, .scanlines, .vignette { display: none !important; }
+  main { padding: 0.7cm 0.9cm; margin: 0; }
+}
 
 /* ── Responsive ── */
 @media (max-width: 640px) {
