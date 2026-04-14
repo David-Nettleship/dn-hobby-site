@@ -107,3 +107,42 @@
 
   requestAnimationFrame(draw);
 })();
+
+// ── Nav injection ─────────────────────────────────────────────────────────────
+// Generates the nav from one source of truth. To add/remove a nav item, edit
+// the links array below — it propagates to every page automatically.
+(function () {
+  const nav = document.querySelector('header nav');
+  if (!nav) return;
+
+  // Infer relative path prefix from the stylesheet link depth:
+  //   style.css       → webpages/           → prefix legions/
+  //   ../style.css    → webpages/legions/    → prefix (none)
+  //   ../../style.css → webpages/legions/*/  → prefix ../
+  const styleHref = (document.querySelector('link[href*="style.css"]') || {}).getAttribute('href') || 'style.css';
+  const depth = (styleHref.match(/\.\.\//g) || []).length;
+  const prefix = depth === 0 ? 'legions/' : depth === 1 ? '' : '../';
+
+  // Determine which section is active
+  const path = window.location.pathname;
+  const active = {
+    background:   path.endsWith('legions.html')        || path.includes('/background/'),
+    armyLists:    path.endsWith('army-lists.html')      || path.includes('/lists/'),
+    battleReports:path.endsWith('battle-reports.html')  || path.includes('/campaigns/'),
+    timeline:     path.endsWith('timeline.html'),
+  };
+
+  const links = [
+    { href: 'legions.html',        label: 'BACKGROUND',     key: 'background'    },
+    { href: 'army-lists.html',     label: 'ARMY LISTS',     key: 'armyLists'     },
+    { href: 'battle-reports.html', label: 'BATTLE REPORTS', key: 'battleReports' },
+    { href: 'timeline.html',       label: 'TIMELINE',       key: 'timeline'      },
+  ];
+
+  const sep = '<span class="nav-sep">⬡</span>';
+
+  nav.innerHTML = links.map((l, i) =>
+    (i > 0 ? sep + '\n      ' : '') +
+    `<a href="${prefix}${l.href}" class="nav-link${active[l.key] ? ' active' : ''}">${l.label}</a>`
+  ).join('\n      ');
+})();
